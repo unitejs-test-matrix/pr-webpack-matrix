@@ -18,10 +18,10 @@ error_handler() {
   exit 1
 }
 kill_chrome() {
-  set +e
-  pkill chromedriver >> $BUILD_OUTPUT 2>&1
-  pkill chrome >> $BUILD_OUTPUT 2>&1
-  set -e
+#   set +e
+#   pkill chromedriver >> $BUILD_OUTPUT 2>&1
+#   pkill chrome >> $BUILD_OUTPUT 2>&1
+#   set -e
 }
 trap 'error_handler' ERR
 
@@ -54,13 +54,13 @@ for f in */; do
         echo "$f - gulp e2e-install"
         gulp e2e-install --drivers=chrome >> $BUILD_OUTPUT 2>&1
         echo "$f - gulp e2e"
-        gulp e2e >> $BUILD_OUTPUT 2>&1
         kill_chrome
+        gulp e2e >> $BUILD_OUTPUT 2>&1
         echo "$f - gulp build --buildConfiguration=prod"
         gulp build --buildConfiguration=prod >> $BUILD_OUTPUT 2>&1
         echo "$f - gulp e2e"
-        gulp e2e >> $BUILD_OUTPUT 2>&1
         kill_chrome
+        gulp e2e >> $BUILD_OUTPUT 2>&1
         # echo "$f - gulp platform-electron-dev"
         # gulp platform-electron-dev >> $BUILD_OUTPUT 2>&1
         # echo "$f - gulp platform-web-package  --buildConfiguration=prod"
